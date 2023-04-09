@@ -45,6 +45,8 @@ Features compute_features(const float *x, int N) {
   Features feat;
   //feat.zcr = feat.p = feat.am = (float) rand()/RAND_MAX;
   feat.p = compute_power(x, N);
+  feat.am= compute_am(x, N);
+  feat.zcr= compute_zcr(x, N);
   return feat;
 }
 
@@ -97,12 +99,13 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
     break;
 
   case ST_SILENCE:
-    if (f.p > vad_data->P0 + vad_data->alpha0/*-35*//*0.95*/)
+    if (f.p > vad_data->P0 + vad_data->alpha0 && f.am>15000 /*-35*//*0.95*/) // podem posar un nivell de am=3000 perd decidir
       vad_data->state = ST_VOICE;
+      
     break;
 
   case ST_VOICE:
-    if (f.p < vad_data->P0 + vad_data->alpha0/*-35*//*0.01*/)
+    if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<15000  /*-35*//*0.01*/)
       vad_data->state = ST_SILENCE;
     break;
 

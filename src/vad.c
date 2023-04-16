@@ -116,7 +116,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
 
     break;
   case ST_MV:
-      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.11   /*-35*//*0.95*/) 
+      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.11) 
         count += 1;
       else if(f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.11){
         vad_data->state = ST_SILENCE;
@@ -129,14 +129,14 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
 
     break;
   case ST_SILENCE:
-      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.11   /*-35*//*0.95*/){
+      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.11){
         vad_data->state = ST_MV;
         count = 0;
       }
     break;
 
   case ST_VOICE:
-      if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.11 /*-35*//*0.01*/){
+      if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.11){
         vad_data->state = ST_MS;
         count = 0;
       }

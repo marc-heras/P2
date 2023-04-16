@@ -6,7 +6,7 @@
 #include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
-unsigned int count = 0;
+unsigned int count, count_init = 0;
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
  * only this labels are needed. You need to add all labels, in case
@@ -94,8 +94,12 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
 
   switch (vad_data->state) {
   case ST_INIT:
-    vad_data->state = ST_SILENCE;
-    vad_data->P0 = f.p;
+    count_init += 1;
+    vad_data->P0 += f.p;
+    if(count_init > 0.08/frame_dur){
+      vad_data->state = ST_SILENCE;
+      vad_data->P0 = vad_data->P0/count_init;
+    }
     break;
 
   case ST_MS:

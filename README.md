@@ -174,8 +174,11 @@ Ejercicios
   el resumen).
 
   **************** Summary ****************
+
   Recall V:488.73/495.55 98.62%   Precision V:488.73/565.49 86.42%   F-score V (2)  : 95.92%
+
   Recall S:244.40/321.17 76.10%   Precision S:244.40/251.22 97.29%   F-score S (1/2): 92.15%
+  
   ===> TOTAL: 94.016%
 
 

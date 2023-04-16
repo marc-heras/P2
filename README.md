@@ -162,7 +162,7 @@ Ejercicios
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
-  ![captura](img/transcripciones.png)
+  ![captura](img/transcripciones.PNG)
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
 
@@ -172,7 +172,7 @@ Ejercicios
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
-  
+
   **************** Summary ****************
   Recall V:488.73/495.55 98.62%   Precision V:488.73/565.49 86.42%   F-score V (2)  : 95.92%
   Recall S:244.40/321.17 76.10%   Precision S:244.40/251.22 97.29%   F-score S (1/2): 92.15%

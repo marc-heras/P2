@@ -109,7 +109,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
         vad_data->state = ST_VOICE;
         count = 0;
       }
-      if(count > 0.05/frame_dur && f.p < vad_data->P0 + 4){
+      if(count > 0.09/frame_dur && f.p < vad_data->P0 + 4){
         vad_data->state = ST_SILENCE;
         count = 0;
       }
@@ -122,7 +122,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
         vad_data->state = ST_SILENCE;
         count = 0;
       }
-      if(count > 0.05/frame_dur && f.p > vad_data->P0 + 10){
+      if(f.p > vad_data->P0 + 10){
         vad_data->state = ST_VOICE;
         count = 0;
       }

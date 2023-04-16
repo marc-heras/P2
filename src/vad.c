@@ -6,7 +6,7 @@
 #include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
-
+unsigned int count = 0;
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
  * only this labels are needed. You need to add all labels, in case
@@ -82,7 +82,7 @@ unsigned int vad_frame_size(VAD_DATA *vad_data) {
  * using a Finite State Automata
  */
 
-VAD_STATE vad(VAD_DATA *vad_data, float *x) {
+VAD_STATE vad(VAD_DATA *vad_data, float *x, float frame_dur) {
 
   /* 
    * TODO: You can change this, using your own features,
@@ -98,26 +98,57 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
     vad_data->P0 = f.p;
     break;
 
+  case ST_MS:
+    if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.6   /*-35*//*0.95*/) 
+        count += 1;
+      else if(f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.6){
+        vad_data->state = ST_VOICE;
+        count = 0;
+      }
+      if(count > 0.2/frame_dur){
+        vad_data->state = ST_SILENCE;
+        count = 0;
+      }
+
+    break;
+  case ST_MV:
+      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.6   /*-35*//*0.95*/) 
+        count += 1;
+      else if(f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.6){
+        vad_data->state = ST_SILENCE;
+        count = 0;
+      }
+      if(count > 0.2/frame_dur){
+        vad_data->state = ST_VOICE;
+        count = 0;
+      }
+
+    break;
   case ST_SILENCE:
-    if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.12   /*-35*//*0.95*/) // podem posar un nivell de am=3000 perd decidir
-      vad_data->state = ST_VOICE;
-      
+      if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.6   /*-35*//*0.95*/){
+        vad_data->state = ST_MV;
+        count = 0;
+      }
     break;
 
   case ST_VOICE:
-    if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.03 /*-35*//*0.01*/)
-      vad_data->state = ST_SILENCE;
+      if (f.p < vad_data->P0 + vad_data->alpha0 && f.am<0.6 /*-35*//*0.01*/){
+        vad_data->state = ST_MS;
+        count = 0;
+      }
     break;
 
   case ST_UNDEF:
+      
+
     break;
   }
-
-  if (vad_data->state == ST_SILENCE ||
+  return vad_data->state;
+  /*if (vad_data->state == ST_SILENCE ||
       vad_data->state == ST_VOICE)
     return vad_data->state;
   else
-    return ST_UNDEF;
+    return ST_UNDEF;*/
 }
 
 void vad_show_state(const VAD_DATA *vad_data, FILE *out) {

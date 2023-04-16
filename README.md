@@ -142,13 +142,13 @@ Ejercicios
 
 	* Incremento del nivel potencia en dB, respecto al nivel correspondiente al silencio inicial, para
 	  estar seguros de que un segmento de señal se corresponde con voz.
-	  
+
 	  Se observa relación con el nivel de potencia. Vemos como esta se incrementa aproximadamente entre 30 y 40 dB al pasar de ruido a voz. Con este cálculo de la potencia, y para esta señal en concreto, podríamos determinar que a partir de una potencia de unos 30 dB tendríamos voz y mientras esté por debajo sería ruido.
       Aún así, debemos tener en cuenta que podemos encontrarnos con distintos tipos de grabaciones y que el cálculo de potencia que proporciona el wavesurfer era algo distinto al que implementamos en la P1; dando la misma variación de valores pero centrada 90 dB por debajo.
 
 	* Duración mínima razonable de los segmentos de voz y silencio.
 
-	  Observando la captura, podríamos aproximar que una duración mínima razonable de un tramo de silencio sería de unos 250ms.
+	  Observando la captura, podríamos aproximar que una duración mínima razonable de un tramo de voz o silencio sería de unos 250ms.
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 

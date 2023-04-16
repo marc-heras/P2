@@ -99,7 +99,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x) {
     break;
 
   case ST_SILENCE:
-    if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.12   /*-35*//*0.95*/) // podem posar un nivell de am=3000 perd decidir
+    if (f.p > vad_data->P0 + vad_data->alpha0 || f.am>0.14   /*-35*//*0.95*/) // podem posar un nivell de am=3000 perd decidir
       vad_data->state = ST_VOICE;
       
     break;
